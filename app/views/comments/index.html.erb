@@ -1,0 +1,8 @@
+<h1>Comments (<%= @comments.length %>)</h1>
+<% if @comments %>
+<ul>
+    <%  @comments.each do |comment| %>
+    <li><%= link_to "#{comment.body[0..5]}...", comment_path(comment) %></li>
+    <% end %>
+</ul>
+<% end %>

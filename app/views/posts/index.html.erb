@@ -1,0 +1,23 @@
+<h1>Current posts: (<%= @posts.length %>)</h1>
+
+<ul>
+<% @posts.each do |post| %>
+  <li><%= link_to post.title, post_path(post) %></li>
+<% end %>
+</ul>
+
+
+<%= link_to "previous", posts_path(page: (@page - 1) ) %> ---
+<%= link_to "next", posts_path(page: (@page + 1) ) %>
+
+
+
+
+<!-- API: public methods made available by the rails gem. is this ruby? is this rails? etc. etc.
+form_for: view constructs
+return value of tags into stringy html. evaluates and generates html.
+both generate form tags: form for is meant to be used with active record objects
+form for takes one argument: activerecord object - usually instance variable, do |f|
+end
+
+form for to send yourself data with params. maps html to params hash, leverage forms to sanitize inputs///cohesions -->

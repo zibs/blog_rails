@@ -1,0 +1,3 @@
+<p><%= @comment.body %></p>
+<p><%= link_to "EDIT", edit_comment_path(@comment) %></p>
+<p><%= link_to "DELETE", comment_path(@comment), method: :delete, data: { confirm: "Are you sure?"} %></p>

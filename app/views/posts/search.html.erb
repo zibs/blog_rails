@@ -1,0 +1,20 @@
+<h3>Search the blog...</h3>
+<%= form_tag('/search', method: :post) do %>
+  <div>
+    <%= label_tag :search_term, "Enter search term..." %>
+    <%= text_field_tag :search_term %>
+  </div>
+  <hr>
+  <div>
+    <%= submit_tag "Search!" %>
+  </div>
+<% end %>
+
+
+<% if @search_results %>
+<ul>
+  <% @search_results.each do |result|  %>
+    <li><%= link_to result.title, post_path(result) %></li>
+  <% end %>
+  </ul>
+<% end %>

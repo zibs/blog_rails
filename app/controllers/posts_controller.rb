@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :find_post only: [:show, :edit, :update, :destroy]
+  before_action :find_post, only: [:show, :edit, :update, :destroy]
 
   def index
     @page = params[:page].to_i
@@ -20,6 +20,7 @@ class PostsController < ApplicationController
       flash[:notice] = "posted!"
       redirect_to posts_path(@post)
     else
+      flash[:alert] = "post failure"
       render :new
     end
   end
@@ -38,6 +39,7 @@ class PostsController < ApplicationController
     if @post.update(post_params)
       redirect_to post_path(@post)
     else
+      flash[:alert] = "Post not created -- Check errors below"
       render :edit
     end
   end
@@ -45,7 +47,7 @@ class PostsController < ApplicationController
   def destroy
     # post = Post.find(params[:id])
     @post.delete
-    redirect_to root_path[]
+    redirect_to root_path, alert: "Post deleted"
   end
 
   def search

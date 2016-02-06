@@ -50,7 +50,11 @@ end
 group :development, :test do
   gem 'pry'
   gem 'rspec-rails', '~> 3.4.2'
-  gem 'factory_girl_rails', '~> 4.5.0'
+  gem 'factory_girl_rails'
+  gem 'guard-rspec', require: false
+  gem 'hirb'
+  gem 'awesome_print'
+  gem 'interactive_editor'
 end
 
 group :production do

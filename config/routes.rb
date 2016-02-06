@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  root "home#index"
-  get 'index' => "home#index"
+  root "homes#index"
 
-  get 'about' => "home#about"
+  get 'index' => "homes#index"
+  get 'about' => "homes#about"
 
   # resources :posts
   # new/create
@@ -10,8 +10,6 @@ Rails.application.routes.draw do
   post "/posts" => "posts#create", as: :posts
   # index/show
   get "/posts" => "posts#index"
-  
-
   get "/posts/:id" => "posts#show", as: :post
   # edit/update
   get "/posts/:id/edit" => "posts#edit", as: :edit_post

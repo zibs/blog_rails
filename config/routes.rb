@@ -6,18 +6,19 @@ Rails.application.routes.draw do
 
   # resources :posts
   # new/create
-  get "/posts/new" => "posts#new", as: :new_post
-  post "/posts" => "posts#create", as: :posts
-  # index/show
-  get "/posts" => "posts#index"
-  get "/posts/:id" => "posts#show", as: :post
-  # edit/update
-  get "/posts/:id/edit" => "posts#edit", as: :edit_post
-  patch "/posts/:id" => "posts#update"
-  # delete
-  delete "/posts/:id" => "posts#destroy"
-
-  resources :comments
+  # get "/posts/new" => "posts#new", as: :new_post
+  # post "/posts" => "posts#create", as: :posts
+  # # index/show
+  # get "/posts" => "posts#index"
+  # get "/posts/:id" => "posts#show", as: :post
+  # # edit/update
+  # get "/posts/:id/edit" => "posts#edit", as: :edit_post
+  # patch "/posts/:id" => "posts#update"
+  # # delete
+  # delete "/posts/:id" => "posts#destroy"
+  resources :posts do
+    resources :comments, only: [:create, :destroy]
+  end
 
   get "/search" => "posts#search"
   post "/search" => "posts#search"

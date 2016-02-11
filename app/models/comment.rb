@@ -1,3 +1,8 @@
 class Comment < ActiveRecord::Base
-  validates :body, presence: true, uniqueness: true, length: { minimum: 2 }
+  belongs_to :post
+  validates :body, presence: true,
+            uniqueness: { scope: :post_id },
+            length: { minimum: 2 }
+
+
 end

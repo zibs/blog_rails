@@ -4,9 +4,7 @@ class PostsController < ApplicationController
   def index
     @page = params[:page].to_i
     page = @page * 10
-
     @posts = Post.order("created_at DESC").offset(page).limit(10)
-
   end
   # .offset("#{current_page * per_page_count}").limit("#{per_page_count}")
 
@@ -26,6 +24,8 @@ class PostsController < ApplicationController
   end
 
   def show
+    @comment = Comment.new
+    @comments = @post.comments.order("created_at DESC")
     # @post = Post.find(params[:id])
   end
 
@@ -55,6 +55,8 @@ class PostsController < ApplicationController
       @search_results = Post.search_blog(params[:search_term])
     end
   end
+
+
       private
 
       def post_params

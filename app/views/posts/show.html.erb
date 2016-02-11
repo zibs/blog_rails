@@ -2,3 +2,36 @@
 <p><%= @post.body %></p>
 <p><%= link_to "EDIT", edit_post_path(@post) %></p>
 <p><%= link_to "DELETE", post_path(@post), method: :delete, data: { confirm: "Are you sure?"} %></p>
+
+<hr>
+<h3>Add a comment: </h3>
+
+<% if @comment.errors.any? %>
+<ul>
+  <% @comment.errors.full_messages.each do |error| %>
+  <li style = "color:red"><%= error %></li>
+  <% end %>
+</ul>
+<% end %>
+
+<%= form_for [@post, @comment] do |f| %>
+  <div>
+    <%= f.label :body %>
+    <%= f.text_area :body %>
+  </div>
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<hr>
+<h3>Comment: </h3>
+<% @comments.each do |comment| %>
+  <ul>
+    <li>
+      <%= comment.body %>
+      <%= link_to "delete", [@post, comment],
+          method: :delete, data: { confirm: "Are you sure? "} %>
+    </li>
+  </ul>
+<% end %>

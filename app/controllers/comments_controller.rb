@@ -37,7 +37,9 @@ class CommentsController < ApplicationController
   #   # @comment = Comment.find(params[:id])
   # end
   #
-  # def update
+  def update
+    
+
   #   comment_params = params.require(:comment).permit([:body])
   #   # @comment = Comment.find(params[:id])
   #   if @comment.update(comment_params)
@@ -45,7 +47,7 @@ class CommentsController < ApplicationController
   #   else
   #     render :edit
   #   end
-  # end
+  end
 
   def destroy
     comment = Comment.find(params[:id])

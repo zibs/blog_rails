@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'users/new'
+
+  get 'users/create'
+
   root "homes#index"
 
   get 'index' => "homes#index"
@@ -18,6 +22,12 @@ Rails.application.routes.draw do
   # delete "/posts/:id" => "posts#destroy"
   resources :posts do
     resources :comments, only: [:create, :destroy]
+  end
+
+  resources :users, only: [:new, :create]
+  
+  resources :sessions, only: [:new, :create] do
+    delete :destroy, on: :collection
   end
 
   get "/search" => "posts#search"

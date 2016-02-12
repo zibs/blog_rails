@@ -11,7 +11,7 @@
   <nav>
     <%= flash[:notice] || flash[:alert] %>
     <% if user_signed_in? %>
-    Hello <%= current_user.first_name %>
+    Hello <%= link_to current_user.first_name, edit_user_path(current_user) %>
           <%= link_to "Sign out", sessions_path, method: :delete %>
     <% else %>
     <%= link_to "Sign Up", new_user_path %>

@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
   before_action :find_post, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user, except: [:index, :show]
+  before_action :authorize_user, only: [:edit, :update, :destroy]
 
   def index
     @page = params[:page].to_i
@@ -14,12 +16,14 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-    if @post.save
-      flash[:notice] = "posted!"
-      redirect_to posts_path(@post)
-    else
-      flash[:alert] = "post failure"
-      render :new
+    # we don't have access to the @current_user, but we access it through the method
+    @post.user = current_user
+      if @post.save
+        flash[:notice] = "posted!"
+        redirect_to posts_path(@post)
+      else
+        flash[:alert] = "post failure"
+        render :new
     end
   end
 
@@ -65,6 +69,21 @@ class PostsController < ApplicationController
 
       def find_post
         @post = Post.find(params[:id])
+      end
+
+      def authenticate_user
+        redirect_to new_session_path, notice: "Please sign in :) " unless user_signed_in?
+      end
+
+      # def authorize_user
+        # if @post.user != current_user
+          # redirect_to root_path , alert: "Access Denied"
+        # end
+      # end
+      def authorize_user
+        unless can? :manage, @question
+        redirect_to root_path , alert: "Access Denied"
+        end
       end
 
 

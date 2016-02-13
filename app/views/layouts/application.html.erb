@@ -10,9 +10,11 @@
 <header>
   <nav>
     <%= flash[:notice] || flash[:alert] %>
+    <%= link_to "All Posts", posts_path  %>
     <% if user_signed_in? %>
     Hello <%= link_to current_user.first_name, edit_user_path(current_user) %>
           <%= link_to "Sign out", sessions_path, method: :delete %>
+          <%= link_to "Create a new Post", new_post_path %>
     <% else %>
     <%= link_to "Sign Up", new_user_path %>
     <%= link_to "Sign In", new_session_path %>

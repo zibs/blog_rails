@@ -1,7 +1,20 @@
 <h1><%= @post.title %></h1>
 <p><%= @post.body %></p>
-<p><%= link_to "EDIT", edit_post_path(@post) %></p>
-<p><%= link_to "DELETE", post_path(@post), method: :delete, data: { confirm: "Are you sure?"} %></p>
+<p>(created by <%= @post.user_full_name %>)</p>
+
+
+<% if can? :edit, @post %>
+<%# if user_signed_in? && current_user == @question.user %>
+<p><%= link_to "Edit", edit_post_path(@post)  %></p>
+<% end %>
+
+<%# method: :delete asks rails to send a delete request instead of get which is accomplished using javascript and jQuery %>
+<% if can? :destroy, @post %>
+<p><%= link_to "Delete", post_path(@post),
+                         method: :delete,
+                         data: { confirm: "Are you sure?" }  %></p>
+<% end  %>
+
 
 <hr>
 <h3>Add a comment: </h3>
@@ -30,8 +43,10 @@
   <ul>
     <li>
       <%= comment.body %>
+      <% if can? :manage, comment %>
       <%= link_to "delete", [@post, comment],
           method: :delete, data: { confirm: "Are you sure? "} %>
+      <% end %>
     </li>
   </ul>
 <% end %>

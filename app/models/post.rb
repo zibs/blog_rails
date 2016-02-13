@@ -1,5 +1,7 @@
 class Post < ActiveRecord::Base
   belongs_to :user
+  belongs_to :category
+
   has_many :comments, dependent: :destroy
 
   validates :title, presence: true, uniqueness: true, length: { minimum: 7}
@@ -17,6 +19,11 @@ class Post < ActiveRecord::Base
       self.body
     end
   end
+
+  def user_full_name
+    user.full_name if user
+  end
+  
 
     private
 

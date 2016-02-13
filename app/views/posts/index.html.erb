@@ -7,7 +7,9 @@
 </ul>
 
 
-<%= link_to "previous", posts_path(page: (@page - 1) ) %> ---
+<%= link_to_unless((@page - 1 <= 0), "previous", posts_path(page: (@page - 1)) ) do |page| %>
+<% end %>
+
 <%= link_to "next", posts_path(page: (@page + 1) ) %>
 
 

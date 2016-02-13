@@ -38,12 +38,10 @@ class UsersController < ApplicationController
       flash[:alert] = "Bad Data"
       render :edit_password
     end
-  else
-    flash[:alert] = "Bad Data"
-    render :edit_password
-  end
-
-
+    else
+      flash[:alert] = "Bad Data"
+      render :edit_password
+    end
   end
 
 

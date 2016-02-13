@@ -1,5 +1,7 @@
 class CommentsController < ApplicationController
   before_action :find_comment, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user
+  before_action :authorize_user, only: [:edit, :update, :destroy]
 
   # def index
   #   @comments = Comment.order("created_at DESC")
@@ -12,7 +14,9 @@ class CommentsController < ApplicationController
   def create
     @post = Post.find(params[:post_id])
     @comment = Comment.new(comment_params)
+    
     @comment.post = @post
+    @comment.user = current_user
 
     if @comment.save
       redirect_to post_path(@post), notice: "Comment Created"
@@ -38,7 +42,7 @@ class CommentsController < ApplicationController
   # end
   #
   def update
-    
+
 
   #   comment_params = params.require(:comment).permit([:body])
   #   # @comment = Comment.find(params[:id])
@@ -64,6 +68,13 @@ class CommentsController < ApplicationController
       def find_comment
         @comment = Comment.find(params[:id])
       end
+
+      def authorize_user
+        unless ((can? :manage, @comment) || (can? :destroy, @comment) )
+          redirect_to root_path, alert: "access denied"
+        end
+      end
+
 
 
 end

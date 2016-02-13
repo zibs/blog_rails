@@ -17,5 +17,10 @@ class ApplicationController < ActionController::Base
     session[:user_id] = user.id
   end
 
+  def authenticate_user
+    redirect_to new_session_path, notice: "Please sign in :) " unless user_signed_in?
+  end
+
+
 
 end

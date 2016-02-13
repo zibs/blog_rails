@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     delete :destroy, on: :collection
   end
 
+  
+
   get "/search" => "posts#search"
   post "/search" => "posts#search"
 

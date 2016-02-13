@@ -15,8 +15,8 @@
                          data: { confirm: "Are you sure?" }  %></p>
 <% end  %>
 
-
 <hr>
+
 <h3>Add a comment: </h3>
 
 <% if @comment.errors.any? %>
@@ -43,6 +43,7 @@
   <ul>
     <li>
       <%= comment.body %>
+      (<%= comment.user_full_name %>)
       <% if can? :manage, comment %>
       <%= link_to "delete", [@post, comment],
           method: :delete, data: { confirm: "Are you sure? "} %>

@@ -2,12 +2,13 @@
 
 <ul>
 <% @posts.each do |post| %>
-  <li><%= link_to post.title, post_path(post) %></li>
+  <li><%= link_to post.title, post_path(post) %>
+      (<%= post.user_full_name  %>)</li>
 <% end %>
 </ul>
 
 
-<%= link_to_unless((@page - 1 <= 0), "previous", posts_path(page: (@page - 1)) ) do |page| %>
+<%= link_to_unless((@page - 1 < 0), "previous", posts_path(page: (@page - 1)) ) do |page| %>
 <% end %>
 
 <%= link_to "next", posts_path(page: (@page + 1) ) %>

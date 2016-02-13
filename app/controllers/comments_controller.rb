@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
   def create
     @post = Post.find(params[:post_id])
     @comment = Comment.new(comment_params)
-    
+
     @comment.post = @post
     @comment.user = current_user
 
@@ -74,7 +74,5 @@ class CommentsController < ApplicationController
           redirect_to root_path, alert: "access denied"
         end
       end
-
-
 
 end

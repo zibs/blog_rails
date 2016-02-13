@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :find_user, only: [:edit, :update, :show, :destroy]
+  before_action :find_user, only: [:edit, :update, :edit_password, :update_password, :show, :destroy]
+
   def new
     @user = User.new
   end
@@ -26,6 +27,24 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit_password
+  end
+
+  def update_password
+    if (@user.authenticate(user_params[:current_password])) && (user_params[:password] == user_params[:password_confirmation])
+      if @user.update(password: user_params[:password])
+        redirect_to root_path, notice: "UPDATED~!"
+      else
+      flash[:alert] = "Bad Data"
+      render :edit_password
+    end
+  else
+    flash[:alert] = "Bad Data"
+    render :edit_password
+  end
+
+
+  end
 
 
     private
@@ -33,7 +52,9 @@ class UsersController < ApplicationController
     def find_user
       @user = User.find(params[:id])
     end
+
     def user_params
-      params.require(:user).permit([:first_name, :last_name, :email, :password, :password_confirmation])
+      params.require(:user).permit([:first_name, :last_name, :email, :password, :password_confirmation, :current_password])
     end
+
 end

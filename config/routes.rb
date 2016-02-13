@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [:new, :create, :show, :edit, :update]
+  get "/users/:id/edit_password" => "users#edit_password", as: :edit_password
+  patch "/users/:id/edit_password" => "users#update_password", as: :update_password
 
   resources :sessions, only: [:new, :create] do
     delete :destroy, on: :collection

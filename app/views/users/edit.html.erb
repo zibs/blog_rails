@@ -1,4 +1,6 @@
-<h1>Sign Up</h1>
+<h1>Edit your profile information</h1>
+
+<p><%= link_to "Change your password", edit_password_path(@user) %></p>
 
 <% if @user.errors.any? %>
 <ul>

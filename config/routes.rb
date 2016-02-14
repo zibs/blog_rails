@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'password_resets/new'
+
+  get 'password_resets/edit'
+
   root "homes#index"
 
   get 'index' => "homes#index"
@@ -28,8 +32,8 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create] do
     delete :destroy, on: :collection
   end
+ resources :password_resets, only: [:new, :create, :edit, :update]
 
-  
 
   get "/search" => "posts#search"
   post "/search" => "posts#search"

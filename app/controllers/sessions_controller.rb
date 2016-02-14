@@ -6,16 +6,27 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
-      # this sets the user's session
       sign_in(user)
+      session["#{user.email}"] = nil
       redirect_to root_path, notice: "Successfully Signed In..."
     else
       flash[:alert] = "Invalid email/password combination"
-      render :new
+
+      if user
+        session["#{user.email}"] ||= 0
+        if session["#{user.email}"] >= 10
+          redirect_to new_password_reset_path
+        else
+          session["#{user.email}"] += 1
+          render :new
+        end
+      else
+        render :new
+      end
     end
   end
 
-  
+
 
   def destroy
     session[:user_id] = nil

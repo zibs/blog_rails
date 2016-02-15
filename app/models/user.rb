@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
     SecureRandom.urlsafe_base64
   end
 
-  def authenticated?(token)
+  def authentic_token?(token)
     BCrypt::Password.new(self.reset_digest).is_password?(token)
   end
 

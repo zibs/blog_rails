@@ -71,15 +71,12 @@ class PostsController < ApplicationController
         @post = Post.find(params[:id])
       end
 
-      def authenticate_user
-        redirect_to new_session_path, notice: "Please sign in :) " unless user_signed_in?
-      end
-
       # def authorize_user
         # if @post.user != current_user
           # redirect_to root_path , alert: "Access Denied"
         # end
       # end
+      
       def authorize_user
         unless can? :manage, @question
         redirect_to root_path , alert: "Access Denied"

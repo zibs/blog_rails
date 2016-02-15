@@ -1,0 +1,14 @@
+div.alert {
+  display: inline-block;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
+.alert-alert {
+  background-color: rgba(251, 128, 128, 0.68);
+  color: rgb(219, 4, 31);
+}
+.alert-notice {
+  background-color: rgba(105, 255, 103, 0.58);
+  color: rgb(31, 217, 0);
+}

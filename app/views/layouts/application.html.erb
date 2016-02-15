@@ -9,7 +9,15 @@
 <body>
 <header>
   <nav>
-    <%= flash[:notice] || flash[:alert] %>
+    
+    <% if flash %>
+    <section class="alerts">
+      <% flash.each do | message_type, message| %>
+      <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+      <% end  %>
+    </section>
+    <% end %>
+
     <%= link_to "All Posts", posts_path  %>
     <% if user_signed_in? %>
     Hello <%= link_to current_user.first_name, edit_user_path(current_user) %>

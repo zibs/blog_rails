@@ -1,0 +1,9 @@
+<% if flash %>
+<section class="container">
+  <section class="col-md-6 col-md-offset-3 text-lg-center">
+  <% flash.each do | message_type, message| %>
+  <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+  <% end  %>
+  </section>
+</section>
+<% end %>

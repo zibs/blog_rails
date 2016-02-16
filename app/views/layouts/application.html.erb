@@ -1,41 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>BlogCc</title>
+  <title>b-log</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<header>
-  <nav>
-    
-    <% if flash %>
-    <section class="alerts">
-      <% flash.each do | message_type, message| %>
-      <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
-      <% end  %>
-    </section>
-    <% end %>
 
-    <%= link_to "All Posts", posts_path  %>
-    <% if user_signed_in? %>
-    Hello <%= link_to current_user.first_name, edit_user_path(current_user) %>
-          <%= link_to "Sign out", sessions_path, method: :delete %>
-          <%= link_to "Create a new Post", new_post_path %>
-    <% else %>
-    <%= link_to "Sign Up", new_user_path %>
-    <%= link_to "Sign In", new_session_path %>
-    <% end %>
+<header>
+  <%= render "layouts/navbar" %>
+  <%= render "layouts/flash" %>
+</header>
+<main class="container">
+<%= yield %>
+</main>
+
+</body>
+</html>
+    <%# link_to "All Posts", posts_path  %>
+    <%# if user_signed_in? %>
+    <!-- Hello <%# link_to current_user.first_name, edit_user_path(current_user) %> -->
+          <%# link_to "Sign out", sessions_path, method: :delete %>
+          <%# link_to "Create a new Post", new_post_path %>
+    <%# else %>
+    <%# link_to "Sign Up", new_user_path %>
+    <%# link_to "Sign In", new_session_path %>
+    <%# end %>
     <!-- <%= link_to "Home", index_path %> -->
     <!-- <%= link_to "About", about_path %> -->
     <!-- <%= link_to "Create Post", new_post_path %> -->
     <!-- <%= link_to "All Posts", posts_path %> -->
     <%# link_to "All Comments", comments_path %>
     <%# link_to "Create Comments", new_comment_path %>
-  </nav>
-</header>
-<%= yield %>
-
-</body>
-</html>

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root "homes#index"
+  root "posts#index"
 
   get 'index' => "homes#index"
   get 'about' => "homes#about"
@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [:new, :create, :show, :edit, :update]
+
   get "/users/:id/edit_password" => "users#edit_password", as: :edit_password
   patch "/users/:id/edit_password" => "users#update_password", as: :update_password
 

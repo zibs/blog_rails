@@ -1,14 +1,55 @@
+@import "bootstrap";
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
 div.alert {
   display: inline-block;
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 5px;
 }
-.alert-alert {
-  background-color: rgba(251, 128, 128, 0.68);
-  color: rgb(219, 4, 31);
+
+
+.logo {
+  font-family: "Courier"
 }
-.alert-notice {
-  background-color: rgba(105, 255, 103, 0.58);
-  color: rgb(31, 217, 0);
+
+#exCollapsingNavbar2 > ul {
+    >li:nth-child(4) {
+      float: right;
+    }
+    >li:nth-child(3) {
+      float: right;
+    }
+    >li:nth-child(2) {
+      float: right;
+    }
+    >li:nth-child(5) {
+      float: right;
+    }
+}
+// SIGN UP
+
+.title {
+  padding: 30px 50px;
+}
+
+// posts
+
+.posts {
+  padding: 0;
+  list-style-type: none;
+}
+.posted-by {
+  font-size: 0.75em;
+  line-height: 0.8em;
+}
+
+
+// comments
+ul.comments-list {
+  list-style-type: none;
+  padding-left: 0;
 }

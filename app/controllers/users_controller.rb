@@ -9,9 +9,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       sign_in(@user)
-      redirect_to root_path, notice: "Account Created :)"
+      redirect_to root_path, flash: { info: "Account Created :)"}
     else
-      flash[:alert] = "Account sign up failed "
+      flash[:warning] = "Not quite! Review the errors and retry."
       render :new
     end
   end
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to root_path, notice: "Updated Successfully"
+      redirect_to root_path, flash: { success: "Update Successful" }
     else
       render :edit
     end
@@ -32,9 +32,9 @@ class UsersController < ApplicationController
 
   def update_password
     if (@user.authenticate(user_params[:current_password])) && (user_params[:password] == user_params[:password_confirmation]) && @user.update(password: user_params[:password])
-        redirect_to root_path, notice: "UPDATED~!"
+        redirect_to root_path, flash: { success: "Password Recodified ..." }
     else
-      flash[:alert] = "Bad Data"
+      flash[:warning] = "Invalid Email/Password Combination"
       render :edit_password
     end
   end

@@ -4,9 +4,10 @@ class PostsController < ApplicationController
   before_action :authorize_user, only: [:edit, :update, :destroy]
 
   def index
-    @page = params[:page].to_i
-    page = @page * 10
-    @posts = Post.order("created_at DESC").offset(page).limit(10)
+    # @page = params[:page].to_i
+    # page = @page * 10
+    @posts = Post.order("created_at DESC").page(params[:page]).per(10)
+    # @posts = Post.order("created_at DESC").offset(page).limit(10)
   end
   # .offset("#{current_page * per_page_count}").limit("#{per_page_count}")
 
@@ -19,17 +20,17 @@ class PostsController < ApplicationController
     # we don't have access to the @current_user, but we access it through the method
     @post.user = current_user
       if @post.save
-        flash[:notice] = "posted!"
+        flash[:info] = "posted!"
         redirect_to posts_path(@post)
       else
-        flash[:alert] = "post failure"
+        flash[:warning] = "post failure"
         render :new
     end
   end
 
   def show
     @comment = Comment.new
-    @comments = @post.comments.order("created_at DESC")
+    @comments = @post.comments.order("created_at DESC").page(params[:page]).per(6)
     # @post = Post.find(params[:id])
   end
 
@@ -41,9 +42,9 @@ class PostsController < ApplicationController
 
     # @post = Post.find(params[:id])
     if @post.update(post_params)
-      redirect_to post_path(@post)
+      redirect_to post_path(@post), flash: { info: "posted ^_^"}
     else
-      flash[:alert] = "Post not created -- Check errors below"
+      flash[:warning] = "Post not created -- Check errors below"
       render :edit
     end
   end
@@ -51,7 +52,7 @@ class PostsController < ApplicationController
   def destroy
     # post = Post.find(params[:id])
     @post.delete
-    redirect_to root_path, alert: "Post deleted"
+    redirect_to root_path, flash: { warning: "Post deleted" }
   end
 
   def search
@@ -76,7 +77,7 @@ class PostsController < ApplicationController
           # redirect_to root_path , alert: "Access Denied"
         # end
       # end
-      
+
       def authorize_user
         unless can? :manage, @question
         redirect_to root_path , alert: "Access Denied"

@@ -8,10 +8,9 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       sign_in(user)
       session["#{user.email}"] = nil
-      redirect_to root_path, notice: "Successfully Signed In..."
+      redirect_to root_path, flash: { success: "Logged In ^_^" }
     else
-      flash[:alert] = "Invalid email/password combination"
-
+      flash[:warning] = "Invalid Email/Password Combination"
       if user
         session["#{user.email}"] ||= 0
         if session["#{user.email}"] >= 10
@@ -30,7 +29,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_path, notice: "Successfully signed out..."
+    redirect_to root_path, flash: { warning: "Successfully signed out..." }
   end
 
 end

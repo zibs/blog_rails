@@ -1,17 +1,30 @@
-<h1>Current posts: (<%= @posts.length %>)</h1>
+<h1 class = "title text-lg-center">Current posts: (<%= @posts.length %>)</h1>
 
-<ul>
-<% @posts.each do |post| %>
-  <li><%= link_to post.title, post_path(post) %>
-      (<%= post.user_full_name  %>)</li>
-<% end %>
-</ul>
+<article class="row">
+  <section class="col-md-6 col-md-offset-3">
+    <% if @posts %>
+    <ul class = "posts">
+      <% @posts.each do |post| %>
+      <li>
+        <p><%= link_to post.title, post_path(post) %></p>
+        <p class="text-muted posted-by">(<%= post.user_full_name  %>)</p>
+      </li>
+      <% end %>
+      </ul>
+    <% end %>
+  </section>
+</article>
+<section class="row">
+  <div class="col-md-6 col-md-offset-3 text-lg-center">
+    <%= paginate @posts %>
+  </div>
+</section>
 
 
-<%= link_to_unless((@page - 1 < 0), "previous", posts_path(page: (@page - 1)) ) do |page| %>
-<% end %>
-
-<%= link_to "next", posts_path(page: (@page + 1) ) %>
+<%#``  %>
+<%# link_to_unless((@page - 1 < 0), "previous", posts_path(page: (@page - 1)) ) do |page| %>
+<%# end %>
+<%# link_to "next", posts_path(page: (@page + 1) ) %>
 
 
 

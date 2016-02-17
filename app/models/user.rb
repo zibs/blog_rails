@@ -1,11 +1,14 @@
 class User < ActiveRecord::Base
   has_many :posts, dependent: :nullify
   has_many :comments, through: :posts
+  validate :password_length
+  # before_update :password_length
+
 	attr_accessor :reset_token
   VALID_EMAIL_REGEX = /\A([\w+\-]\.?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
 
   has_secure_password
-  validates :password, length: { minimum: 5 }
+  validates :password, length: { minimum: 5 }, on: :create
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true,
@@ -19,7 +22,6 @@ class User < ActiveRecord::Base
   def full_name_downcase
     "#{first_name} #{last_name}".downcase.split(" ").join("")
   end
-
 
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -50,5 +52,17 @@ class User < ActiveRecord::Base
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
   end
+
+      private
+
+      def password_length
+        if password.present? && password.length >= 6
+          true
+        else
+          errors.add(:password, "Password must be longer than 6 characters")
+          # false
+          # use false if doing a before_update callback
+        end
+      end
 
 end

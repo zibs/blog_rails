@@ -74,6 +74,19 @@ RSpec.describe PostsController, :type => :controller do
       end
 
       describe "#edit" do
+        context "unauthorized user" do
+          let(:user_two){create(:user)}
+          let(:blogpost){create(:post, user_id: user_two)}
+          it "cannot edit another's post" do
+            get :edit, id: blogpost
+            expect(response).to redirect_to(root_path)
+          end
+          it "sets a flash message" do
+            get :edit, id: blogpost
+            expect(flash[:info]).to be
+          end
+
+        end
         context "with valid attributes" do
           # this is not hitting the controller so its not making the association
 
@@ -91,6 +104,19 @@ RSpec.describe PostsController, :type => :controller do
       end
 
       describe "#update" do
+        context "unauthorized user" do
+          let(:user_two){create(:user)}
+          let(:blogpost){create(:post, user_id: user_two)}
+          it "cannot update someone else's blogpost" do
+            patch :update, id: blogpost, post: {title: ""}
+            expect(response).to redirect_to(root_path)
+          end
+          it "sets a flash message" do
+            patch :update, id: blogpost, post: {title: ""}
+            expect(flash[:info]).to be
+          end
+
+        end
         context "with valid attributes" do
           # let(:blog_post){create(:post, user_id: user.id)}
 
@@ -133,6 +159,20 @@ RSpec.describe PostsController, :type => :controller do
 
       describe "#destroy" do
 
+        context "unauthorized user" do
+          let!(:user_two){create(:user)}
+          let!(:blogpost){create(:post, user_id: user_two)}
+
+          it "cannot delete another user's post" do
+            delete :destroy, id: blogpost
+            expect(response).to redirect_to(root_path)
+          end
+          it "sets a flash message" do
+            delete :destroy, id: blogpost
+            expect(flash[:info]).to be
+          end
+        end
+
         let!(:firstblogpost){create(:post, user_id: user.id)}
         let!(:blogpost){create(:post, user_id: user.id)}
 
@@ -154,9 +194,10 @@ RSpec.describe PostsController, :type => :controller do
            expect(flash[:warning]).to be
          end
        end
-    end
+     end
 
-    context "unauthenticated user" do
+
+context "unauthenticated user" do
       let(:blogpost){create(:post)}
       describe "#new" do
         it "redirects to sign in page" do
@@ -209,9 +250,8 @@ RSpec.describe PostsController, :type => :controller do
           expect(response).to render_template(:show)
         end
       end
-
-
     end
+
 end
 
 

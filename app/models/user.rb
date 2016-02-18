@@ -56,10 +56,12 @@ class User < ActiveRecord::Base
       private
 
       def password_length
-        if password.present? && password.length >= 6
+        if password.present?
+          true unless password.length <= 6
+        elsif !password.present?
           true
         else
-          errors.add(:password, "Password must be longer than 6 characters")
+          errors.add(:password, "must be longer than 6 characters")
           # false
           # use false if doing a before_update callback
         end

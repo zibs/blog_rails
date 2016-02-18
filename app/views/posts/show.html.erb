@@ -4,20 +4,22 @@
     <p class = ""><%= @post.body %></p>
     <p class = 'text-muted posted-by'>(created by <%= @post.user_full_name %>)</p>
 
+    <% if can? :manage, @post %>
+    <%# if user_signed_in? && current_user == @question.user %>
+    <p><%= link_to "Edit", edit_post_path(@post) %></p>
+    <% end %>
+    
+    <% if can? :manage, @post %>
+    <p><%= link_to "Delete", post_path(@post),
+                             method: :delete,
+                             data: { confirm: "Are you sure?" }  %></p>
+    <% end  %>
   </section>
 
 
-<% if can? :edit, @post %>
-<%# if user_signed_in? && current_user == @question.user %>
-<p><%= link_to "Edit", edit_post_path(@post) %></p>
-<% end %>
-
 <%# method: :delete asks rails to send a delete request instead of get which is accomplished using javascript and jQuery %>
-<% if can? :destroy, @post %>
-<p><%= link_to "Delete", post_path(@post),
-                         method: :delete,
-                         data: { confirm: "Are you sure?" }  %></p>
-<% end  %>
+
+
 </article>
 <hr>
 <article class="row">

@@ -29,7 +29,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_path, flash: { warning: "Successfully signed out..." }
+    redirect_to root_path, flash: { danger: "Successfully signed out..." }
   end
 
 end

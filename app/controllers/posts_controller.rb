@@ -25,7 +25,7 @@ class PostsController < ApplicationController
       else
         flash[:warning] = "post failure"
         render :new
-    end
+      end
   end
 
   def show
@@ -42,9 +42,9 @@ class PostsController < ApplicationController
 
     # @post = Post.find(params[:id])
     if @post.update(post_params)
-      redirect_to post_path(@post), flash: { info: "posted ^_^"}
+      redirect_to post_path(@post), flash: { info: "posted ^_^" }
     else
-      flash[:warning] = "Post not created -- Check errors below"
+      flash[:warning] = "Update Not Successful -- Check Errors Below"
       render :edit
     end
   end
@@ -79,8 +79,8 @@ class PostsController < ApplicationController
       # end
 
       def authorize_user
-        unless can? :manage, @question
-        redirect_to root_path , alert: "Access Denied"
+        unless can? :manage, @post
+        redirect_to root_path , flash: { info: "Access Denied" }
         end
       end
 

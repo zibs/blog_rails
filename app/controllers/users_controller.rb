@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :find_user, only: [:edit, :update, :edit_password, :update_password, :show, :destroy]
+  
 
   def new
     @user = User.new

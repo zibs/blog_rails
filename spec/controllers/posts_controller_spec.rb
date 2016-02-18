@@ -155,6 +155,63 @@ RSpec.describe PostsController, :type => :controller do
          end
        end
     end
+
+    context "unauthenticated user" do
+      let(:blogpost){create(:post)}
+      describe "#new" do
+        it "redirects to sign in page" do
+          get :new
+          expect(response).to redirect_to(new_session_path)
+        end
+      end
+
+      describe "#create" do
+        it "redirects to sign in page" do
+          post :create, post:blogpost
+          expect(response).to redirect_to(new_session_path)
+        end
+      end
+
+      describe "#edit" do
+        it "redirects to sign in page" do
+          get :edit, id: blogpost
+          expect(response).to redirect_to(new_session_path)
+        end
+      end
+
+      describe "#update"
+        it "redirects to sign in page" do
+          patch :update,id: blogpost, post: { title: ""}
+        end
+      describe "#destroy" do
+      let!(:blogpost){create(:post)}
+        it "redirects to the sign in page" do
+          delete :destroy, id: blogpost
+          expect(response).to redirect_to(new_session_path)
+        end
+      end
+
+      describe "#index" do
+        it "renders the index template" do
+          get :index
+          expect(response).to render_template(:index)
+        end
+        # it "paginates the posts" do
+          # get :index
+          # expect(assigns).to
+        # end
+      end
+
+      describe "#show" do
+      let(:blogpost){create(:post)}
+        it "renders the show template" do
+          get :show, id: blogpost
+          expect(response).to render_template(:show)
+        end
+      end
+
+
+    end
 end
 
 

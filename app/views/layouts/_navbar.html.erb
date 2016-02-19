@@ -13,9 +13,14 @@
         <li class="nav-item active logo">
           <%= link_to "$ tail -f #{current_user.full_name_downcase}/misc.log", root_path, class: "nav-link brand-homepage" %>
         </li>
-        <li class="nav-item ">
+        <li class="nav-item <%= 'active' if current_page?(new_post_path) %> ">
           <%= link_to "add post", new_post_path, class: "nav-link" %>
         </li>
+
+        <li class="nav-item <%= 'active' if current_page?(favourites_path) %> ">
+          <%= link_to "favourites", favourites_path, class: "nav-link" %>
+        </li>
+
         <li class="nav-item
             <%= 'active' if current_page?(edit_user_path(current_user)) %>">
             <%= link_to "edit profile", edit_user_path(current_user), class: "nav-link" %>

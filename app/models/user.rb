@@ -1,6 +1,10 @@
 class User < ActiveRecord::Base
   has_many :posts, dependent: :nullify
   has_many :comments, through: :posts
+
+  has_many :favourites, dependent: :destroy
+  has_many :favourite_posts, through: :favourites, source: :post
+
   validate :password_length
   # before_update :password_length
 

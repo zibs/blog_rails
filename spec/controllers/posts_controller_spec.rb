@@ -5,7 +5,7 @@ RSpec.describe PostsController, :type => :controller do
   # let(:blogpost){create(:post)}
   let(:user){create(:user)}
 
-  context "authenticated user" do
+   context "authenticated user" do
       before { log_in(user) }
 
       describe "#new" do
@@ -196,8 +196,7 @@ RSpec.describe PostsController, :type => :controller do
        end
      end
 
-
-context "unauthenticated user" do
+   context "unauthenticated user" do
       let(:blogpost){create(:post)}
       describe "#new" do
         it "redirects to sign in page" do
@@ -322,7 +321,7 @@ end
 #       end
 #
 #       context "with invalid attributes" do
-#         def invalid_post_request
+#         def inval[id_post_request
 #           post :create, post: { title: "", body: ""}
 #         end
 #

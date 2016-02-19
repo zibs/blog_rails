@@ -3,6 +3,9 @@ class Post < ActiveRecord::Base
   belongs_to :category
   has_many :comments, dependent: :destroy
 
+  has_many :favourites, dependent: :destroy
+  has_many :favouriting_users, through: :favourites, source: :user
+
   validates :title, presence: true, uniqueness: true, length: { minimum: 7}
   validates :body, presence: true
 
@@ -22,6 +25,11 @@ class Post < ActiveRecord::Base
   def user_full_name
     user.full_name if user
   end
+
+  def favourite_for(user)
+    favourites.find_by(user_id: user)
+  end
+  
 
     private
 

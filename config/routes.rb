@@ -19,7 +19,9 @@ Rails.application.routes.draw do
   # delete "/posts/:id" => "posts#destroy"
   resources :posts do
     resources :comments, only: [:create, :destroy]
+    resources :favourites, only: [:create, :destroy]
   end
+  resources :favourites, only: [:index]
 
   resources :users, only: [:new, :create, :show, :edit, :update]
 

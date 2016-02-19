@@ -16,7 +16,7 @@ class FavouritesController < ApplicationController
   end
 
   def destroy
-    favourite = Favourite.find(params[:id])
+    favourite = current_user.favourites.find(params[:id])
     favourite.destroy
     redirect_to post_path(params[:post_id]), flash: {warning: "un<3ed"}
   end

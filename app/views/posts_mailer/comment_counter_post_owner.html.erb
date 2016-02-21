@@ -1,0 +1,12 @@
+<p>Hi <%= @owner %> </p>
+<p>You received <%= @comments.length %> today</p>
+<p>Here are they are:
+  <% @comments.each do |comment| %>
+    <p>This comment was for your post: <%= comment.post.title %></p>
+    <p>and the comment was: </p>
+    <p><%= comment.body %> by <%= comment.user.full_name %></p>
+  <% end %>
+
+<p>That's it today!</p>
+
+<p>See you tomorrow :)</p>

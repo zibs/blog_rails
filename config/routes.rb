@@ -36,6 +36,7 @@ Rails.application.routes.draw do
 
   get "/search" => "posts#search"
   post "/search" => "posts#search"
+  match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

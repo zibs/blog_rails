@@ -19,7 +19,7 @@ class CommentsController < ApplicationController
     @comment.user = current_user
 
     if @comment.save
-      PostsMailer.notify_post_owner(@comment).deliver_now
+      PostsMailer.notify_post_owner(@comment).deliver_later
       redirect_to post_path(@post), notice: "Comment Created"
     else
       render "posts/show"

@@ -1,7 +1,8 @@
 <li class = "col-md-4" id = "<%= dom_id(comment) %>">
-  <%= comment.body %>
+  <p class = "editable_comment"><%= comment.body %></p>
   <p class = 'text-muted posted-by'>(<%= comment.user_full_name %>)</p>
   <% if can? :manage, comment %>
+  <%= link_to "edit", edit_comment_path(comment), remote: true  %>
   <%= link_to "delete", [@post, comment],
                         method: :delete,
                         remote: true,

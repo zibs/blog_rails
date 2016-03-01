@@ -4,7 +4,6 @@
     <p class = ""><%= @post.body %></p>
     <p class = 'text-muted posted-by'>(created by <%= @post.user_full_name %>)</p>
 
-
     <%# favourite a post %>
     <% favourite = @post.favourite_for(current_user) %>
     <% if favourite %>
@@ -13,8 +12,7 @@
     <%= link_to fa_icon("heart-o"), post_favourites_path(@post), method: :post %>
     <% end %>
     <%= @post.favourites.count %>
-
-
+    
     <% if can? :manage, @post %>
     <%# if user_signed_in? && current_user == @question.user %>
     <p><%= link_to "Edit", edit_post_path(@post) %></p>
@@ -35,6 +33,7 @@
 <hr>
 
 <div id="create_comment">
+  <h4 class = "">Add a comment: </h4>
   <%= render "comments/form" %>
 </div>
 
@@ -43,7 +42,7 @@
 
 <article class="row">
   <section class="col-md-10 col-md-offset-1">
-    <h4>Comments </h4>
+    <h4>Comments</h4>
       <ul class = "comments-list" id = "comments-loop">
         <% @comments.each do |comment| %>
           <%= render "comments/comment", comment: comment %>

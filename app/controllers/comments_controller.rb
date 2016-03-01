@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :find_comment, only: [:show, :edit, :update, :destroy]
+  before_action :find_comment, only: [:edit, :update, :destroy]
   before_action :authenticate_user
   before_action :authorize_user, only: [:edit, :update, :destroy]
 
@@ -40,15 +40,26 @@ class CommentsController < ApplicationController
   #   # @comment = Comment.find(params[:id])
   # end
   #
-  # def edit
-  #   # @comment = Comment.find(params[:id])
-  # end
+  def edit
+    respond_to do |format|
+      format.js { render :edit_comment}
+    end
+  end
+
   #
   def update
+    @post = @comment.post
+    respond_to do |format|
+      if @comment.update(comment_params)
+        format.html { redirect_to post_path(@post), flash: { success: "Updated"}}
+        format.js { render :successful_comment_update}
+      else
+        format.html { render :edit }
+        format.js { render :unsuccess_comment_update}
+      end
+    end
 
 
-  #   comment_params = params.require(:comment).permit([:body])
-  #   # @comment = Comment.find(params[:id])
   #   if @comment.update(comment_params)
   #     redirect_to comment_path(@comment)
   #   else
@@ -57,7 +68,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:post_id])
+    # @post = Post.find(params[:post_id])
     @comment = Comment.find(params[:id])
     @comment.destroy
     respond_to do |format|

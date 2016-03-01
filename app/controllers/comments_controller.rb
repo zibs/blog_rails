@@ -14,25 +14,27 @@ class CommentsController < ApplicationController
   def create
     @post = Post.find(params[:post_id])
     @comment = Comment.new(comment_params)
-
     @comment.post = @post
     @comment.user = current_user
-
-    if @comment.save
-      PostsMailer.notify_post_owner(@comment).deliver_later
-      redirect_to post_path(@post), notice: "Comment Created"
-    else
-      render "posts/show"
+    respond_to do |format|
+        if @comment.save
+          format.html { PostsMailer.notify_post_owner(@comment).deliver_later
+          redirect_to post_path(@post), notice: "Comment Created" }
+          format.js { render :successful_comment}
+        else
+          format.html { render "posts/show" }
+          format.js { render :unsuccessful_comment }
+        end
+      end
     end
-    # comment_params = params.require(:comment).permit([:body])
-    # @comment = Comment.new(comment_params)
-    # if @comment.save
-      # flash[:notice] = "Comment added successfully!"
-      # redirect_to comment_path(@comment)
-    # else
-      # render :new
-    # end
-  end
+  # comment_params = params.require(:comment).permit([:body])
+  # @comment = Comment.new(comment_params)
+  # if @comment.save
+    # flash[:notice] = "Comment added successfully!"
+    # redirect_to comment_path(@comment)
+  # else
+    # render :new
+  # end
   #
   # def show
   #   # @comment = Comment.find(params[:id])
@@ -55,9 +57,13 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    comment = Comment.find(params[:id])
-    comment.destroy
-    redirect_to post_path(params[:post_id]), alert: "Question Deleted"
+    @post = Post.find(params[:post_id])
+    @comment = Comment.find(params[:id])
+    @comment.destroy
+    respond_to do |format|
+      format.html { redirect_to post_path(params[:post_id]), alert: "Question Deleted" }
+      format.js { render }
+    end
   end
 
       private

@@ -33,48 +33,25 @@
 
 </article>
 <hr>
-<article class="row">
-  <section class="col-md-4 col-md-offset-1">
-    <h4 class = "">Add a comment: </h4>
-    <% if @comment.errors.any? %>
-    <ul>
-      <% @comment.errors.full_messages.each do |error| %>
-      <li style = "color:red"><%= error %></li>
-      <% end %>
-    </ul>
-    <% end %>
 
-    <%= form_for [@post, @comment] do |f| %>
-      <div class = "form-group">
-        <%# f.label :body %>
-        <%= f.text_area :body, class: "form-control"%>
-      </div>
-      <div class = "form-group">
-        <%= f.submit "post comment", class: "btn btn-small btn-danger-outline" %>
-      </div>
-    <% end %>
-  </section>
-</article>
+<div id="create_comment">
+  <%= render "comments/form" %>
+</div>
+
 <hr>
 <% if @comments  %>
+
 <article class="row">
   <section class="col-md-10 col-md-offset-1">
     <h4>Comments </h4>
-    <ul class = "comments-list">
-    <% @comments.each do |comment| %>
-        <li class = "col-md-4">
-          <%= comment.body %>
-          <p class = 'text-muted posted-by'>(<%= comment.user_full_name %>)</p>
-          <% if can? :manage, comment %>
-          <%= link_to "delete", [@post, comment],
-              method: :delete, data: { confirm: "Are you sure? "} %>
-          <% end %>
-        </li>
-
-    <% end %>
-    </ul>
+      <ul class = "comments-list" id = "comments-loop">
+        <% @comments.each do |comment| %>
+          <%= render "comments/comment", comment: comment %>
+        <% end %>
+      </ul>
   </section>
 </article>
+
 <article class="row">
   <section class="col-md-10 col-md-offset-5">
     <%= paginate @comments %>

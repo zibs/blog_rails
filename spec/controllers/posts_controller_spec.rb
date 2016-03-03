@@ -48,7 +48,7 @@ RSpec.describe PostsController, :type => :controller do
 
           it "redirects to the posts show" do
             send_valid_request
-            expect(response).to redirect_to(posts_path(Post.last))
+            expect(response).to redirect_to(post_path(Post.last))
           end
         end
 

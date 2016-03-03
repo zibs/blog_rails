@@ -7,6 +7,10 @@ class PostsController < ApplicationController
     # @page = params[:page].to_i
     # page = @page * 10
     @posts = Post.order("created_at DESC").page(params[:page]).per(10)
+    respond_to do |format|
+      format.html { render }
+      format.json { render json: @posts.select(:id, :title, :body)}
+    end
     # @posts = Post.order("created_at DESC").offset(page).limit(10)
   end
   # .offset("#{current_page * per_page_count}").limit("#{per_page_count}")
@@ -21,7 +25,7 @@ class PostsController < ApplicationController
     @post.user = current_user
       if @post.save
         flash[:info] = "posted!"
-        redirect_to posts_path(@post)
+        redirect_to post_path(@post)
       else
         flash[:warning] = "post failure"
         render :new
@@ -32,6 +36,10 @@ class PostsController < ApplicationController
     @comment = Comment.new
     @comments = @post.comments.order("created_at DESC").page(params[:page]).per(6)
     # @post = Post.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.json { render json: @post }
+    end
   end
 
   def edit

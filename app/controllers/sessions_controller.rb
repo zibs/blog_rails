@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       sign_in(user)
       session["#{user.email}"] = nil
-      redirect_to root_path, flash: { success: "Logged In ^_^" }
+      redirect_to root_path, flash: { success: "Authenticated ^_^" }
     else
       flash[:warning] = "Invalid Email/Password Combination"
       if user

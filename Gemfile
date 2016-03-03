@@ -33,7 +33,11 @@ gem 'cancancan'
 gem "delayed_job_active_record"
 gem "delayed_job_web"
 gem "letter_opener"
-
+# certain browsers don't allow cross domain ajax requests without specififying config for the middleware.
+gem 'rack-cors', :require => 'rack/cors'
+gem "capybara"
+gem "launchy"
+gem 'simplecov', :require => false
 # Use Unicorn as the app server
 # gem 'unicorn'
 

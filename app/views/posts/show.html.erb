@@ -1,7 +1,8 @@
 <article class="row">
   <section class="col-md-10 col-md-offset-1">
     <h1 class = "title"><%= @post.title %></h1>
-    <p class = ""><%= @post.body %></p>
+    <p><%= @post.body %></p>
+    <p class = "text-muted"><%= @post.category.title %></p>
     <p class = 'text-muted posted-by'>(created by <%= @post.user_full_name %>)</p>
 
     <%# favourite a post %>
@@ -12,7 +13,7 @@
     <%= link_to fa_icon("heart-o"), post_favourites_path(@post), method: :post %>
     <% end %>
     <%= @post.favourites.count %>
-    
+
     <% if can? :manage, @post %>
     <%# if user_signed_in? && current_user == @question.user %>
     <p><%= link_to "Edit", edit_post_path(@post) %></p>

@@ -2,9 +2,12 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
 # Examples:
-#
+
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+["Pop Poetry", "Poetics", "Pseudo Poetics", "Poesy", "Poetic Technologies", "The Poetry of Innovation"].each do |cat|
+  Category.create(title: cat)
+end
 
 25.times do
   user = User.create(first_name: Faker::Name.first_name,
@@ -13,7 +16,8 @@
                       password: "123123", password_confirmation: "123123")
  10.times do
    user.posts.create(title: Faker::Book.title,
-                   body: Faker::Hipster.paragraph(3))
+                   body: Faker::Hipster.paragraph(3),
+                   category: Category.all.sample)
 
  end
 

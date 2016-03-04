@@ -6,7 +6,7 @@ class FavouritesController < ApplicationController
   end
 
   def create
-    post = Post.find(params[:post_id])
+    post = Post.friendly.find(params[:post_id])
     favourite = Favourite.new(post: post, user: current_user)
     if favourite.save
       redirect_to post, flash: { success: "<3"}

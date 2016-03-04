@@ -49,5 +49,6 @@ RSpec.feature "Posts", type: :feature do
     end
   end
 
+
 # end rspec
 end

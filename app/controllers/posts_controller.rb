@@ -47,7 +47,7 @@ class PostsController < ApplicationController
   end
 
   def update
-
+    @post.slug = nil
     # @post = Post.find(params[:id])
     if @post.update(post_params)
       redirect_to post_path(@post), flash: { info: "posted ^_^" }
@@ -77,7 +77,7 @@ class PostsController < ApplicationController
       end
 
       def find_post
-        @post = Post.find(params[:id])
+        @post = Post.friendly.find(params[:id])
       end
 
       # def authorize_user

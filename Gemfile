@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5.1'
 # Use postgresql as the database for Active Record
@@ -41,6 +40,13 @@ gem 'simplecov', :require => false
 # Use Unicorn as the app server
 # gem 'unicorn'
 gem 'friendly_id', '~> 5.1.0'
+gem 'figaro'
+
+gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
+gem 'mini_magick'
+gem 'fog'
+
+gem 'quiet_assets'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

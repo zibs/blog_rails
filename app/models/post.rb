@@ -1,11 +1,14 @@
 class Post < ActiveRecord::Base
+
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history]
 
+  mount_uploaders :images, ImagesUploader
+
   belongs_to :user
   belongs_to :category
-  has_many :comments, dependent: :destroy
 
+  has_many :comments, dependent: :destroy
   has_many :favourites, dependent: :destroy
   has_many :favouriting_users, through: :favourites, source: :user
 

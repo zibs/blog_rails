@@ -20,6 +20,7 @@ class PostsController < ApplicationController
   end
 
   def create
+    # binding.pry
     @post = Post.new(post_params)
     # we don't have access to the @current_user, but we access it through the method
     @post.user = current_user
@@ -73,7 +74,7 @@ class PostsController < ApplicationController
       private
 
       def post_params
-        params.require(:post).permit([:title, :body])
+        params.require(:post).permit(:title, :body, {images: []})
       end
 
       def find_post

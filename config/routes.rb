@@ -33,7 +33,14 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create] do
     delete :destroy, on: :collection
   end
- resources :password_resets, only: [:new, :create, :edit, :update]
+  resources :password_resets, only: [:new, :create, :edit, :update]
+
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :posts, only: [:index, :show, :create]
+    end
+  end
+
 
 
   get "/search" => "posts#search"

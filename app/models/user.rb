@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  before_create :generate_api_key
+
   has_many :posts, dependent: :nullify
   has_many :comments, through: :posts
 
@@ -26,6 +28,8 @@ class User < ActiveRecord::Base
   def full_name_downcase
     "#{first_name} #{last_name}".downcase.split(" ").join("")
   end
+
+
 
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -70,5 +74,19 @@ class User < ActiveRecord::Base
           # use false if doing a before_update callback
         end
       end
+
+
+        # options: SecureRandom.hex,
+      def generate_api_key
+        self.api_key = SecureRandom.hex(32)
+        while User.exists?(api_key: self.api_key)
+          self.api_key = SecureRandom.hex(32)
+        end
+        # begin
+          #     self.api_key = SecureRandom.hex(32)
+          # end while User.exists?(api_key: self.api_key)
+      end
+      # User.where(api_key: nil).each { |u| u.send(:generate_api_key); u.save}
+
 
 end

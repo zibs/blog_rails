@@ -1,7 +1,8 @@
 class Post < ActiveRecord::Base
-
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history]
+
+  attr_accessor :tweet_post
 
   mount_uploaders :images, ImagesUploader
 
@@ -34,6 +35,10 @@ class Post < ActiveRecord::Base
 
   def favourite_for(user)
     favourites.find_by(user_id: user)
+  end
+
+  def category_title
+    category.title if category
   end
 
 

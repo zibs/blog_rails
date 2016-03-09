@@ -1,23 +1,2 @@
-<h1>EDIT POST</h1>
-
-<% if @post.errors.any? %>
-<ul>
-  <% @post.errors.full_messages.each do |error_msg| %>
-    <li style = "color: red"><%= error_msg %></li>
-  <% end %>
-</ul>
-<% end %>
-
-<%= form_for @post do |f| %>
-<div>
-<%= f.label :title %>
-<%= f.text_field :title %>
-</div>
-<div>
-<%= f.label :body %>
-<%= f.text_area :body %>
-</div>
-<div>
-<%= f.submit %>
-</div>
-<% end %>
+<h1>Edit Post</h1>
+<%= render "post" %>

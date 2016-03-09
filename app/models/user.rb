@@ -1,5 +1,7 @@
-class User < ActiveRecord::Base
+  class User < ActiveRecord::Base
   before_create :generate_api_key
+
+  serialize :twitter_data, Hash
 
   has_many :posts, dependent: :nullify
   has_many :comments, through: :posts
@@ -19,17 +21,38 @@ class User < ActiveRecord::Base
   validates :last_name, presence: true
   validates :email, presence: true,
             uniqueness: true,
-            format: VALID_EMAIL_REGEX
+            format: VALID_EMAIL_REGEX, unless: :from_oauth?
 
+  def from_oauth?
+    provider.present? && uid.present?
+  end
 
   def full_name
     "#{first_name} #{last_name}".titleize
   end
+
   def full_name_downcase
     "#{first_name} #{last_name}".downcase.split(" ").join("")
   end
 
+  def signed_in_with_twitter?
+    provider == "twitter" && provider.present? && uid.present?
+  end
 
+  def self.find_twitter_user(omniauth_data)
+    where(provider: "twitter", uid: omniauth_data["uid"]).first
+  end
+
+  def self.create_from_twitter(twitter_data)
+    name = twitter_data["info"]["name"].split(" ")
+      User.create(provider: "twitter",
+                  uid: twitter_data["uid"],
+                  first_name: name[0], last_name: name[1],
+                  password: SecureRandom.hex,
+                  twitter_token: twitter_data["credentials"]["token"],
+                  twitter_secret: twitter_data["credentials"]["secret"],
+                  twitter_raw_data: twitter_data )
+  end
 
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -74,7 +97,6 @@ class User < ActiveRecord::Base
           # use false if doing a before_update callback
         end
       end
-
 
         # options: SecureRandom.hex,
       def generate_api_key

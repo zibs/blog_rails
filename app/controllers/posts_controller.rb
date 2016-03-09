@@ -25,8 +25,16 @@ class PostsController < ApplicationController
     # we don't have access to the @current_user, but we access it through the method
     @post.user = current_user
       if @post.save
-        flash[:info] = "posted!"
-        redirect_to post_path(@post)
+        if @post.tweet_post
+          client = Twitter::REST::Client.new do |config|
+            config.consumer_key        = ENV["TWITTER_CONSUMER_KEY"]
+            config.consumer_secret     = ENV["TWITTER_SECRET_KEY"]
+            config.access_token        = current_user.twitter_token
+            config.access_token_secret = current_user.twitter_secret
+          end
+          client.update("new post #{@post.title} @ #{root_url} ")
+        end
+       redirect_to post_path(@post), flash: {info: "Posted!"}
       else
         flash[:warning] = "post failure"
         render :new
@@ -74,7 +82,7 @@ class PostsController < ApplicationController
       private
 
       def post_params
-        params.require(:post).permit(:title, :category_id, :body, {images: []})
+        params.require(:post).permit(:title, :category_id, :body, {images: []}, :tweet_post)
       end
 
       def find_post

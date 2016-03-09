@@ -2,7 +2,7 @@
   <section class="col-md-10 col-md-offset-1">
     <h1 class = "title"><%= @post.title %></h1>
     <p><%= @post.body %></p>
-    <p class = "text-muted"><%= @post.category.title %></p>
+    <p class = "text-muted"><%= @post.category_title %></p>
     <p class = 'text-muted posted-by'>(created by <%= @post.user_full_name %>)</p>
 
     <%# favourite a post %>

@@ -52,6 +52,8 @@ gem "active_model_serializers"
 gem 'omniauth-twitter'
 gem "twitter"
 
+gem 'react-rails', '~> 1.6.0'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

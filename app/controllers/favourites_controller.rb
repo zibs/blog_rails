@@ -2,7 +2,7 @@ class FavouritesController < ApplicationController
   before_action :authenticate_user
 
   def index
-    @favourites = current_user.favourited_questions.order("created_at DESC")
+    @favourites = current_user.favourite_posts.order("created_at DESC")
   end
 
   def create

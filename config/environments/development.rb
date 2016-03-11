@@ -42,6 +42,10 @@ Rails.application.configure do
   host = 'localhost:3002'
   config.action_mailer.default_url_options = { host: host }
 
+  # ReAcT
+  config.react.variant = :development
+
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end

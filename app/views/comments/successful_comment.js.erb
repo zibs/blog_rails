@@ -1,4 +1,5 @@
 $("#comments-loop").prepend("<%= j render 'comments/comment', comment: @comment %>")
 <% @comment = Comment.new %>
-$("#create_comment").html("<%= j render 'form' %>")
+<%# binding.pry %>
+$("#create_comment").html("<%= j render 'comments/react_comment', post: @post %>")
 $("#comment_body").val("");

@@ -4,50 +4,47 @@
     <p><%= @post.body %></p>
     <p class = "text-muted"><%= @post.category_title %></p>
     <p class = 'text-muted posted-by'>(created by <%= @post.user_full_name %>)</p>
-
     <%# favourite a post %>
     <% favourite = @post.favourite_for(current_user) %>
     <% if favourite %>
-    <%= link_to fa_icon("heart"), post_favourite_path(@post, favourite), method: :delete %>
+      <%= link_to fa_icon("heart"), post_favourite_path(@post, favourite), method: :delete %>
     <% else %>
-    <%= link_to fa_icon("heart-o"), post_favourites_path(@post), method: :post %>
+      <%= link_to fa_icon("heart-o"), post_favourites_path(@post), method: :post %>
     <% end %>
     <%= @post.favourites.count %>
-
     <% if can? :manage, @post %>
     <%# if user_signed_in? && current_user == @question.user %>
-    <p><%= link_to "Edit", edit_post_path(@post) %></p>
+      <p><%= link_to "Edit", edit_post_path(@post) %></p>
     <% end %>
-
     <% if can? :manage, @post %>
-    <p><%= link_to "Delete", post_path(@post),
+      <p><%= link_to "Delete", post_path(@post),
                              method: :delete,
                              data: { confirm: "Are you sure?" }  %></p>
     <% end  %>
   </section>
-
-
 <%# method: :delete asks rails to send a delete request instead of get which is accomplished using javascript and jQuery %>
-
-
 </article>
 <hr>
 
 <div id="create_comment">
   <h4 class = "">Add a comment: </h4>
-  <%= render "comments/form" %>
+  <%# render "comments/form" %>
+  <%# react_component("CommentForm", {postId: "#{@post.id}"}) %>
 </div>
 
 <hr>
 <% if @comments  %>
-
 <article class="row">
   <section class="col-md-10 col-md-offset-1">
     <h4>Comments</h4>
       <ul class = "comments-list" id = "comments-loop">
-        <% @comments.each do |comment| %>
-          <%= render "comments/comment", comment: comment %>
-        <% end %>
+        <%= react_component('Comments', { comments: @comments } ) %>
+        <%# @comments.each do |comment| %>
+          <%# render "comments/comment", comment: comment %>
+          <%# if can? :manage, comment %>
+          <%# react_component('Comment', {body: "#{comment.body}", user: "#{comment.user.full_name}", id: "#{comment.id}"}, {prerender: true}) %>
+          <%# end %>
+        <%# end %>
       </ul>
   </section>
 </article>
